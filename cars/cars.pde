@@ -1,3 +1,5 @@
+import java.util.*;
+
 ArrayList<Gate> gates = new ArrayList();
 ArrayList<Agent> cars = new ArrayList();
 ArrayList<Node> nodes = new ArrayList();
@@ -8,16 +10,25 @@ int cols, rows;
 ArrayList<Street> roads = new ArrayList();
 ArrayList<Node> outsideNodes = new ArrayList();
 
+ArrayList<Boolean> grid = new ArrayList();
+
 void setup()
 {
   size(800, 800);
   cols = width/tileSize;
   rows = height/tileSize;
   
-  roads.add(new Street(5, false));
-  roads.add(new Street(13, false));
-  roads.add(new Street(5, true));
-  roads.add(new Street(13, true));
+  roads.add(new Street(5, true, 0));
+  roads.add(new Street(6, true, 2));
+  
+  roads.add(new Street(5, false, 1));
+  roads.add(new Street(6, false, 3));
+  
+  roads.add(new Street(13, true, 0));
+  roads.add(new Street(14, true, 2));
+  
+  roads.add(new Street(13, false, 1));
+  roads.add(new Street(14, false, 3));
   //roads.add(new Street(9, true));
   
   placeNodes();
@@ -37,6 +48,11 @@ void setup()
   {
     if(n.outer)
       outsideNodes.add(n);
+  }
+  
+  for(Street s : roads)
+  {
+  
   }
   //cars.add(new Agent(outsideNodes.get((int)random(outsideNodes.size()))));
   //cars.add(new Agent(width/2 - 150, height/2,n));
@@ -93,60 +109,73 @@ void mouseClicked()
   }
 }
 
+//void placeNodes()
+//{
+//  for(Street s1 : roads)
+//  {
+//    for(Tile t1 : s1.tiles)
+//    {
+//      if(!t1.hasNode)
+//      {
+//        for(Street s2 : roads)
+//        {
+//          if(s1.id != s2.id)
+//          {
+//            for(Tile t2 : s2.tiles)
+//            {
+//              if(t1.pos.x == t2.pos.x && t1.pos.y == t2.pos.y && (!t2.hasNode)){
+//                t1.hasNode = true;
+//                t1.col = color(193, 112, 247);
+//                t2.col = color(193, 112, 247);
+//                Node n = new Node((int)t1.pos.x + tileSize/2, (int)t1.pos.y + tileSize/2, false);
+//                //println("Node initialized at (" + n.pos.x/tileSize + "," + n.pos.y/tileSize + ")");
+//                if(s1.isHorz)
+//                {
+//                  if(t1.index == s1.index)
+//                    n.dir[2] = 1; //top half, move left
+//                  else
+//                    n.dir[0] = 1; //bottom move right
+                  
+//                  if(t2.index == s2.index)
+//                    n.dir[1] = 1; //left move down
+//                  else
+//                    n.dir[3] = 1; //right move up
+//                }
+//                else
+//                {
+//                  if(t1.index == s1.index)
+//                    n.dir[1] = 1;
+//                  else
+//                    n.dir[3] = 1;
+                  
+//                  if(t1.index == s2.index)
+//                    n.dir[2] = 1;
+//                  else
+//                    n.dir[0] = 1;
+//                }
+                  
+//                nodes.add(n);
+//                println("S1.index = " + s1.index + " | S2.index = " + s2.index + " | t1.index = " + t1.index + " | t2.index = " + t2.index);
+//                for(int i = 0; i < 4; i++)
+//                  print(n.dir[i]);
+//                println();
+//              }
+//            }
+//          }
+//        }
+//      }
+//    }
+//  }
+//}
+
 void placeNodes()
 {
-  for(Street s1 : roads)
+  
+  for(Street s : roads)
   {
-    for(Tile t1 : s1.tiles)
+    for(Tile t : s.tiles)
     {
-      if(!t1.hasNode)
-      {
-        for(Street s2 : roads)
-        {
-          if(s1.id != s2.id)
-          {
-            for(Tile t2 : s2.tiles)
-            {
-              if(t1.pos.x == t2.pos.x && t1.pos.y == t2.pos.y && (!t2.hasNode)){
-                t1.hasNode = true;
-                Node n = new Node((int)t1.pos.x + tileSize/2, (int)t1.pos.y + tileSize/2, false);
-                println("Node initialized at (" + n.pos.x/tileSize + "," + n.pos.y/tileSize + ")");
-                if(s1.isHorz)
-                {
-                  if(t1.index == s1.index)
-                    n.dir[2] = 1;
-                  else
-                    n.dir[0] = 1;
-                  
-                  if(t2.index == s2.index)
-                    n.dir[1] = 1;
-                  else
-                    n.dir[3] = 1;
-                }
-                else
-                {
-                  if(t1.index == s1.index){
-                    n.dir[2] = 1;
-                  }
-                  else
-                    n.dir[0] = 1;
-                  
-                  if(t1.index == s2.index)
-                    n.dir[1] = 1;
-                  else
-                    n.dir[3] = 1;
-                }
-                  
-                nodes.add(n);
-                //println("S1.index = " + s1.index + " | S2.index = " + s2.index + " | t1.index = " + t1.index + " | t2.index = " + t2.index);
-                //for(int i = 0; i < 4; i++)
-                //  print(n.dir[i]);
-                //println();
-              }
-            }
-          }
-        }
-      }
+        
     }
   }
 }

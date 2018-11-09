@@ -5,6 +5,8 @@ class Node
   int nodeSize = tileSize/2;
   boolean outer;
   
+  PVector intAcc = new PVector();
+  
   int[] dir = {0,0,0,0}; //right, down, left, up
   
   Node(int x, int y, boolean outer)

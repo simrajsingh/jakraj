@@ -4,13 +4,14 @@ class Street
   int index;
   boolean isHorz;
   ArrayList<Tile> tiles = new ArrayList();
+  int dir;
   
-  Street(int index, boolean isHorz)
+  Street(int index, boolean isHorz, int dir)
   {
     this.index = index;
     this.isHorz = isHorz;
     this.id = (int)random(5000) + (int)random(5000);
-  
+    this.dir = dir;
     layTiles();
   }
   
@@ -27,40 +28,18 @@ class Street
       stLen = cols;
     else
       stLen = rows;
-    boolean sndLoop = false;
-    for(int i = 0; i < stLen; i++)
-    {  
-      //if(isHorz && (i == 0)){
-      //  nodes.add(new Node(tileSize/2, (index) * tileSize + tileSize/2));
-      //  nodes.add(new Node(tileSize/2, (index+1) * tileSize + tileSize/2));
-      //}
-      //else{
-      //  nodes.add(new Node(index * tileSize + tileSize/2,tileSize/2));
-      //  nodes.add(new Node((index+1) * tileSize + tileSize/2,tileSize/2));
-      //}
       
-      int ind = index;
-      if(sndLoop)
-        ind = index + 1;
-      if(isHorz){
-        tiles.add(new Tile(i * tileSize, ind * tileSize, ind));
-        if(i == 0)
-          nodes.add(new Node(i * tileSize + tileSize/2, ind * tileSize + tileSize/2, true));
-        if(i == stLen - 1)
-           nodes.add(new Node(i * tileSize + tileSize/2, ind * tileSize + tileSize/2, true));
+    for(int i = 0; i < stLen; i++)
+    { 
+      if(isHorz)
+      {
+        tiles.add(new Tile(tiles.size(), index, dir));
       }
-      else{
-        tiles.add(new Tile(ind * tileSize, i * tileSize, ind));
-        if(i == 0)
-          nodes.add(new Node(ind * tileSize + tileSize/2, i * tileSize + tileSize/2, true));
-        if(i == stLen - 1)
-           nodes.add(new Node(ind * tileSize + tileSize/2, i * tileSize + tileSize/2, true));
+      else
+      {
+        tiles.add(new Tile(index, tiles.size(), dir));
       }
-      if(i == stLen - 1 && !sndLoop)
-       {
-         sndLoop = true;
-         i = -1;
-       }
+      
     }
   }
   
@@ -68,21 +47,26 @@ class Street
 
 class Tile
 {
-  PVector pos;
+  int i,j;
   int size = tileSize;
-  boolean hasNode;
-  int index;
+  color col = color(255);
   
-  Tile(int x, int y,int ind)
+  Tile(int i, int j, int dir)
   {
-    pos = new PVector(x, y);
-    this.index = ind;
+    this.i = i;
+    this.j = j;
+    if(dir == 1 || dir == 2)
+      col = color(0, 0, 255);
+    else
+      col = color(255, 0, 0);
+      
+    
   }
   
   void show()
   {
-    fill(0, 0, 255);
-    rect(pos.x, pos.y, size, size);
+    fill(col);
+    rect(i * size, j * size, size, size);
   }
   
 }

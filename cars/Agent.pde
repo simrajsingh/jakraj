@@ -14,6 +14,8 @@ class Agent
   
   ArrayList<Node> path = new ArrayList();
   
+  PVector appAcc = new PVector();
+  
   Node target;
   
   Agent(Node spawnNode)
@@ -119,6 +121,17 @@ class Agent
   void findPath()
   {
     
+  }
+  
+  void findNode()
+  {
+    for(Node n : nodes)
+    {
+      if(PVector.dist(this.pos, n.pos) <= n.nodeSize/2)
+      {
+        this.appAcc = n.intAcc;
+      }
+    }
   }
 
 }
